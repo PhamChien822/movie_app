@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:movie_app/src/views/screens/forgotpasswordscreen.dart';
-import 'package:movie_app/src/views/screens/homescreen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:movie_app/src/router/nameroute.dart';
 import 'package:movie_app/src/views/screens/registerscreen.dart';
 import 'package:movie_app/src/views/widgets/blockicons.dart';
 import 'package:movie_app/src/views/widgets/textfielditem.dart';
@@ -29,18 +29,9 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isEmailValid = false;
   bool _isPasswordValid = false;
 
+  bool get isValidForm => _isEmailValid && _isPasswordValid;
+
   //error text
-
-  String? _errorEmailText;
-
-  String? _errorPasswordText;
-
-  void _validateInputs() {
-    setState(() {
-      _isEmailValid = _emailController.text.contains('@');
-      _isPasswordValid = _passwordController.text.length >= 8;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
               Align(
                 alignment: Alignment.topLeft,
                 child: Container(
-                  height: 0.05*height,
-                  width: 0.05*height,
+                  height: 0.05 * height,
+                  width: 0.05 * height,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(color: AppColors.borderColor),
@@ -66,10 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     icon:
                         SvgPicture.asset("assets/images/icons/back-arrow.svg"),
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => HomeScreen()));
+                     context.go(NameRoute.homeScreen);
                     },
                   ),
                 ),
@@ -82,16 +70,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: AppTextStyle.bigNameScreen),
                 ),
               ),
-              textFieldItem("Email", "Enter your email", _errorEmailText,
-                  _emailController, _validateInputs, _isEmailValid),
-              textFieldItem(
-                  "Password",
-                  "Enter your password",
-                  _errorPasswordText,
-                  _passwordController,
-                  _validateInputs,
-                  _isPasswordValid,
-                  isPasswordFeild: true),
+              TextFieldItem(
+                hintText: "Enter your email",
+                controller: _emailController,
+                isEmail: true,
+                onValidate: (isValid) {
+                  _isEmailValid = isValid;
+                  setState(() {});
+                },
+              ),
+              TextFieldItem(
+                hintText: "Enter your password",
+                controller: _passwordController,
+                isPasswordField: true,
+                onValidate: (isValid) {
+                  _isPasswordValid = isValid;
+                  setState(() {});
+                },
+              ),
               Align(
                 alignment: Alignment.centerRight,
                 child: RichText(
@@ -103,11 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => ForgotPasswordScreen()),
-                        );
+                        context.go(NameRoute.forgotPasswordScreen);
                       },
                   ),
                 ),
@@ -115,7 +107,13 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 30.0),
                 child: Center(
-                    child: AppButtonLogin(text: "Login", onPressed: () {})),
+                    child: AppButtonLogin(
+                        text: "Login",
+                        onPressed: isValidForm
+                            ? () {
+                                context.go(NameRoute.homeScreen);
+                              }
+                            : null)),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 35, horizontal: 4),
@@ -124,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Expanded(
                         child: Divider(
                       thickness: 2,
-                      color: AppColors.borderColor,
+                      color: AppColors.borderActive,
                     )),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 5),

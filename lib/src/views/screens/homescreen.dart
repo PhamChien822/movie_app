@@ -1,7 +1,8 @@
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:movie_app/src/views/screens/createnewpasswordscreen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:movie_app/src/router/nameroute.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -26,10 +27,7 @@ class HomeScreen extends StatelessWidget {
                 AssetImage('assets/images/arcane.png'),
             child: TextButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => CreateNewPasswordScreen()));
+                 context.go(NameRoute.loginScreen);
                 },
                 child: Container()), // Avatar image
           ),

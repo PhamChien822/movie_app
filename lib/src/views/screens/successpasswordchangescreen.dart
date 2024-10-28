@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:movie_app/src/router/nameroute.dart';
 import 'package:movie_app/src/views/screens/loginscreen.dart';
 import 'package:movie_app/src/views/widgets/appbutton.dart';
 import 'package:movie_app/theme/apptextstyles.dart';
@@ -58,10 +60,7 @@ class SuccessPasswordChangeScreen extends StatelessWidget {
               AppButtonLogin(
                   text: "Back to Login",
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => LoginScreen()));
+                    context.go(NameRoute.loginScreen);
                   })
             ],
           ),

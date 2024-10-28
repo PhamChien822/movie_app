@@ -5,7 +5,7 @@ import '../../../theme/apptextstyles.dart';
 
 class AppButtonLogin extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const AppButtonLogin(
       {super.key, required this.text, required this.onPressed});
