@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:movie_app/providers/themeprovider.dart';
+import 'package:provider/provider.dart';
 
 import '../../../theme/appcolors.dart';
 import '../../../theme/apptextstyles.dart';
+import '../../constants/button_size_constants.dart';
+import '../../router/nameroute.dart';
 
 class AppButtonLogin extends StatelessWidget {
   final String text;
@@ -12,11 +18,13 @@ class AppButtonLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvier = Provider.of<ThemeProvider>(context);
     return SizedBox(
       width: double.infinity, // Đặt chiều rộng đầy đủ
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.buttonColor,
+          disabledBackgroundColor: themeProvier.currentTheme.disabledColor,
+          backgroundColor: themeProvier.currentTheme.primaryColorDark,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8), // Đặt bán kính bo tròn
           ),
@@ -28,6 +36,30 @@ class AppButtonLogin extends StatelessWidget {
          text,
           style: AppTextStyle.buttonTextStyle,
         ),
+      ),
+    );
+  }
+}
+class AppButtonBackArrow extends StatelessWidget {
+  final VoidCallback? onPressed;
+
+  const AppButtonBackArrow(
+      {super.key,required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    final themeProvier = Provider.of<ThemeProvider>(context);
+  return  Container(
+      height: SizeButton.backArrowSize,
+      width: SizeButton.backArrowSize,
+      decoration: BoxDecoration(
+          color: themeProvier.currentTheme.colorScheme.primary,
+          border: Border.all(color: themeProvier.currentTheme.colorScheme.primaryContainer),
+          borderRadius: BorderRadius.circular(15)),
+      child: IconButton(
+        icon:
+        SvgPicture.asset("assets/images/icons/back-arrow.svg",color: themeProvier.currentTheme.colorScheme.onPrimary,),
+        onPressed: onPressed
       ),
     );
   }

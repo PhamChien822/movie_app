@@ -45,23 +45,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             children: [
               Align(
                 alignment: Alignment.topLeft,
-                child: Container(
-                  height: 0.05 * height,
-                  width: 0.05 * height,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: AppColors.borderColor),
-                      borderRadius: BorderRadius.circular(borderRadiusValue)),
-                  child: IconButton(
-                    icon:
-                        SvgPicture.asset("assets/images/icons/back-arrow.svg"),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => HomeScreen()));
-                    },
-                  ),
+                child: AppButtonBackArrow(
+                  onPressed: (){
+                    context.go(NameRoute.loginScreen);
+                  },
                 ),
               ),
               Padding(
@@ -70,7 +57,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Text('Forgot Password?',
-                      style: AppTextStyle.bigNameScreen),
+                      style: Theme.of(context).textTheme.bodyMedium),
                 ),
               ),
               Padding(
@@ -79,7 +66,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   alignment: Alignment.topLeft,
                   child: Text(
                       "Don't worry! It occurs.Please enter the email address linked with your account.",
-                      style: AppTextStyle.detailScreen),
+                      style: Theme.of(context).textTheme.titleSmall),
                 ),
               ),
               TextFieldItem(

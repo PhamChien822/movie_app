@@ -5,7 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_app/theme/appcolors.dart';
 import 'package:movie_app/theme/apptextstyles.dart';
+import 'package:provider/provider.dart';
 
+import '../../../providers/themeprovider.dart';
+import '../widgets/appbutton.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
   const OTPVerificationScreen({super.key});
@@ -19,7 +22,16 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final height = size.height;
-
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    bool isDarkMode = themeProvider.isDarkMode;
+    Color borderColor =
+        isDarkMode ? AppColors.darkBorderOTPField : AppColors.borderColor;
+    Color borderActiveColor =
+        isDarkMode ? AppColors.darkBorderActive : AppColors.borderActive;
+    Color backgroundColor = isDarkMode
+        ? AppColors.darkBackgroundOTPField
+        : AppColors.backgroundInputFieldColor;
+    Color backgroundActiveColor = isDarkMode ? AppColors.darkBackgroundOTPField : Colors.white;
     return Scaffold(
       body: SafeArea(
         child: Stack(children: [
@@ -28,20 +40,10 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
             children: [
               Align(
                 alignment: Alignment.topLeft,
-                child: Container(
-                  height: 0.05 * height,
-                  width: 0.05 * height,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: AppColors.borderColor),
-                      borderRadius: BorderRadius.circular(15)),
-                  child: IconButton(
-                    icon:
-                        SvgPicture.asset("assets/images/icons/back-arrow.svg"),
-                    onPressed: () {
-                     context.go(NameRoute.homeScreen);
-                    },
-                  ),
+                child: AppButtonBackArrow(
+                  onPressed: () {
+                    context.go(NameRoute.loginScreen);
+                  },
                 ),
               ),
               Padding(
@@ -61,7 +63,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                       style: AppTextStyle.detailScreen),
                 ),
               ),
-              OtpInputFeild()
+              OtpInputFeild(backgroundColor: backgroundColor,backgroundActiveColor: backgroundActiveColor,borderActiveColor: borderActiveColor,borderColor: borderColor,)
             ],
           ),
         ]),

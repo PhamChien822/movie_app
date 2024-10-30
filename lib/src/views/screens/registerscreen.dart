@@ -5,7 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:movie_app/src/router/nameroute.dart';
 import 'package:movie_app/src/views/screens/homescreen.dart';
 import 'package:movie_app/src/views/screens/loginscreen.dart';
-import 'package:movie_app/src/views/widgets/blockicons.dart';
+import 'package:movie_app/src/views/widgets/cardicons.dart';
+
 import 'package:movie_app/src/views/widgets/textfielditem.dart';
 import 'package:movie_app/theme/appcolors.dart';
 import 'package:movie_app/theme/apptextstyles.dart';
@@ -52,23 +53,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
             children: [
               Align(
                 alignment: Alignment.topLeft,
-                child: Container(
-                  height: height * 0.05,
-                  width: height * 0.05,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: AppColors.borderColor),
-                      borderRadius: BorderRadius.circular(8)),
-                  child: IconButton(
-                    icon:
-                        SvgPicture.asset("assets/images/icons/back-arrow.svg"),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => HomeScreen()));
-                    },
-                  ),
+                child:  AppButtonBackArrow(
+                  onPressed: (){
+                    context.go(NameRoute.loginScreen);
+                  },
                 ),
               ),
               SizedBox(
@@ -168,9 +156,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  blockIcon('assets/images/logos/google.svg'),
-                  blockIcon('assets/images/logos/facebook.svg'),
-                  blockIcon('assets/images/logos/gmail.svg')
+                  cardIcon('assets/images/logos/google.svg',context),
+                  cardIcon('assets/images/logos/facebook.svg',context),
+                  cardIcon('assets/images/logos/gmail.svg',context)
                 ],
               ),
               SizedBox(

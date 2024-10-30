@@ -32,84 +32,75 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery
-        .of(context)
-        .size;
+    final size = MediaQuery.of(context).size;
     final height = size.height;
-
 
     return Scaffold(
       body: SafeArea(
         child: Stack(children: [
-        ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12),
-        children: [
-        Align(
-        alignment: Alignment.topLeft,
-        child: Container(
-          height: 0.05 * height,
-          width: 0.05 * height,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: AppColors.borderColor),
-              borderRadius: BorderRadius.circular(15)),
-          child: IconButton(
-            icon:
-            SvgPicture.asset("assets/images/icons/back-arrow.svg"),
-            onPressed: () {
-              GoRouter.of(context).go('/');
-            },
+          ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12),
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: AppButtonBackArrow(
+                  onPressed: () {
+                    context.go(NameRoute.loginScreen);
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 28),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text('Create new Password',
+                      style: AppTextStyle.bigNameScreen),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 28),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                      "Your new password must be unique from those previously used",
+                      style: AppTextStyle.detailScreen),
+                ),
+              ),
+              TextFieldItem(
+                hintText: "New Password",
+                controller: _passwordController,
+                isPasswordField: true,
+                onValidate: (isValid) {
+                  isPasswordValid = isValid;
+                  _updateSubmitButtonState();
+                },
+              ),
+              TextFieldItem(
+                hintText: "Confirm Password",
+                controller: _confirmPasswordController,
+                isConfirmPassword: true,
+                passwordController: _passwordController,
+                onValidate: (isValid) {
+                  isConfirmPasswordValid = isValid;
+                  _updateSubmitButtonState();
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                child: Center(
+                    child: AppButtonLogin(
+                        text: "Reset Password",
+                        onPressed: isFormValid
+                            ? () {
+                                context
+                                    .go(NameRoute.successPasswordChangeScreen);
+                              }
+                            : null)),
+              ),
+            ],
           ),
-        ),
+        ]),
       ),
-      Padding(
-        padding: const EdgeInsets.only(top: 28),
-        child: Align(
-          alignment: Alignment.topLeft,
-          child: Text('Create new Password',
-              style: AppTextStyle.bigNameScreen),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(bottom: 28),
-        child: Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-              "Your new password must be unique from those previously used",
-              style: AppTextStyle.detailScreen),
-        ),
-      ),
-      TextFieldItem(
-        hintText: "New Password",
-        controller: _passwordController,
-        isPasswordField: true,
-        onValidate: (isValid) {
-          isPasswordValid = isValid;
-          _updateSubmitButtonState();
-        },
-      ),
-      TextFieldItem(
-        hintText: "Confirm Password",
-        controller: _confirmPasswordController,
-        isConfirmPassword: true,
-        passwordController: _passwordController,
-        onValidate: (isValid) {
-          isConfirmPasswordValid = isValid;
-          _updateSubmitButtonState();
-        },
-      ),
-      Padding(
-          padding: const EdgeInsets.only(top: 30.0),
-          child: Center(
-              child: AppButtonLogin(
-                  text: "Reset Password", onPressed: isFormValid ? () {
-                    context.go(NameRoute.successPasswordChangeScreen);
-              }: null)),
-    ),
-    ],
-    ),
-    ]),
-    ),
     );
   }
 }

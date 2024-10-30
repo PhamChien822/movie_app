@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/providers/themeprovider.dart';
 import 'package:movie_app/theme/appcolors.dart';
 import 'package:movie_app/theme/apptextstyles.dart';
+import 'package:provider/provider.dart';
 
 String? validateName(String? name) {
   if (name == null || name.isEmpty) {
@@ -134,6 +136,8 @@ class TextFieldItemState extends State<TextFieldItem> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    InputDecorationTheme inputDecorationTheme = themeProvider.themeData.inputDecorationTheme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: TextField(
@@ -141,28 +145,16 @@ class TextFieldItemState extends State<TextFieldItem> {
         onChanged: _validateInput,
         obscureText: widget.isPasswordField || widget.isConfirmPassword,
         keyboardType: TextInputType.emailAddress,
-        style: AppTextStyle.inputFeildTextStyle,
+        style: themeProvider.currentTheme.textTheme.bodyMedium,
         decoration: InputDecoration(
           hintText: widget.hintText,
           filled: true,
-          fillColor: AppColors.backgroundInputFieldColor,
-          hintStyle: AppTextStyle.hintTextStyle,
-          suffixStyle: AppTextStyle.hintTextStyle,
+          fillColor: inputDecorationTheme.fillColor,
+          hintStyle: inputDecorationTheme.hintStyle,
           errorText: errorText,
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(
-              color: AppColors.borderColor,
-              width: 2,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(
-              color: AppColors.borderColor,
-              width: 2,
-            ),
-          ),
+          focusedBorder: inputDecorationTheme.border,
+          enabledBorder:inputDecorationTheme.enabledBorder,
+
         ),
       ),
     );

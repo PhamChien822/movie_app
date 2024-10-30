@@ -44,6 +44,8 @@ dependencies:
   flutter_otp_text_field: ^1.2.0
   otp_input_editor: ^0.0.9
   toastification: ^2.3.0
+  provider: ^6.1.2
+  keyboard_dismisser: ^3.0.0
 
 dev_dependencies:
   flutter_test:
