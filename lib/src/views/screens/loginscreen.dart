@@ -1,18 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:movie_app/providers/themeprovider.dart';
+import 'package:movie_app/src/constants/auth_costants.dart';
 import 'package:movie_app/src/router/nameroute.dart';
-import 'package:movie_app/src/views/screens/registerscreen.dart';
 import 'package:movie_app/src/views/widgets/cardicons.dart';
+import 'package:movie_app/src/views/widgets/dividers/auth_dividers.dart';
 import 'package:movie_app/src/views/widgets/textfielditem.dart';
 import 'package:movie_app/theme/appcolors.dart';
 import 'package:movie_app/theme/apptextstyles.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/appbutton.dart';
+import '../widgets/footers/auth_footer.dart';
+import '../widgets/headers/auth_header.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,7 +23,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
   //TextEditing controller
 
   final _emailController = TextEditingController();
@@ -39,37 +41,20 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final height = size.height; // Chiều cao màn hình  Padding(
+    final height = size.height;
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.brightness_6),
-            onPressed: themeProvider.toggleTheme,
-          ),
-        ],
-      ),
       body: KeyboardDismisser(
         child: SafeArea(
           child: Stack(children: [
             ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12),
               children: [
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: AppButtonBackArrow(
-                      onPressed: () {
-                        context.go(NameRoute.homeScreen);
-                      },
-                    )),
-                Padding(
-                  padding: const EdgeInsets.only(top: 28, bottom: 28, right: 83),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text('Welcome back! Glad to see you, Again ',
-                        style: ThemeProvider.changeTheme(context)),
-                  ),
+                AuthHeader(
+                  nameRoute: NameRoute.homeScreen,
+                  headerText: AuthConstants.headerTextLogin,
+                  detailText: '',
                 ),
                 TextFieldItem(
                   hintText: "Enter your email",
@@ -114,28 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               : null)),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 4),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: Divider(
-                        thickness: 2,
-                        color: themeProvider.currentTheme.dividerColor,
-                      )),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
-                        child: Text('or Register with',
-                            style:
-                                themeProvider.currentTheme.textTheme.titleSmall),
-                      ),
-                      Expanded(
-                          child: Divider(
-                        thickness: 2,
-                        color: themeProvider.currentTheme.dividerColor,
-                      )),
-                    ],
-                  ),
-                ),
+                    padding: EdgeInsets.symmetric(vertical: 35, horizontal: 4),
+                    child: AuthDividers(text: AuthConstants.dividerTextLogin)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -145,30 +110,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: height * 0.23,
+                  height: height * 0.14,
                 ),
-                Center(
-                  child: RichText(
-                    text: TextSpan(
-                      text: "Don't have an account? ",
-                      style: AppTextStyle.footerTextAuthenticationStyle,
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Register Now',
-                          style: TextStyle(
-                            color: AppColors.textButtonLoginColor,
-                            // Color for "Login Now"
-                            fontWeight: FontWeight.bold,
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              context.go(NameRoute.registerScreen);
-                            },
-                        ),
-                      ],
-                    ),
-                  ),
-                )
+                AuthFooter(
+                  nameRoute: NameRoute.registerScreen,
+                  beginText: AuthConstants.footerBeginTextLogin,
+                  endText: AuthConstants.footerEndTextLogin,
+                ),
               ],
             ),
           ]),

@@ -2,10 +2,14 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movie_app/src/constants/auth_costants.dart';
 import 'package:movie_app/src/router/nameroute.dart';
 import 'package:movie_app/src/views/screens/homescreen.dart';
 import 'package:movie_app/src/views/screens/loginscreen.dart';
 import 'package:movie_app/src/views/widgets/cardicons.dart';
+import 'package:movie_app/src/views/widgets/dividers/auth_dividers.dart';
+import 'package:movie_app/src/views/widgets/footers/auth_footer.dart';
+import 'package:movie_app/src/views/widgets/headers/auth_header.dart';
 
 import 'package:movie_app/src/views/widgets/textfielditem.dart';
 import 'package:movie_app/theme/appcolors.dart';
@@ -51,31 +55,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
             padding: EdgeInsets.symmetric(
                 horizontal: width * 0.05, vertical: height * 0.014),
             children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child:  AppButtonBackArrow(
-                  onPressed: (){
-                    context.go(NameRoute.loginScreen);
-                  },
-                ),
-              ),
-              SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: SvgPicture.asset(
-                    "images/icons/tick_check_icon.svg",
-                  )),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: height * 0.03,
-                    bottom: height * 0.03,
-                    right: 0.2 * width),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text('Hello, Register to get started',
-                      style: AppTextStyle.bigNameScreen),
-                ),
-              ),
+              AuthHeader(
+                  nameRoute: NameRoute.forgotPasswordScreen,
+                  headerText: AuthConstants.headerTextRegister,
+                  detailText: ''),
               TextFieldItem(
                 hintText: "Enter your name",
                 controller: _nameController,
@@ -129,70 +112,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(
                     vertical: 0.04 * height, horizontal: 0.01 * width),
-                // Khoảng cách cho chữ "or"
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Divider(
-                      thickness: 2,
-                      color: AppColors.borderColor,
-                    )),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0.01 * width),
-                      child: Text('or Register with',
-                          style: AppTextStyle.baseTextStyle.copyWith(
-                              color: Colors.grey,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700)),
-                    ),
-                    Expanded(
-                        child: Divider(
-                      thickness: 2,
-                      color: AppColors.borderColor,
-                    )),
-                  ],
-                ),
+                child: AuthDividers(text: AuthConstants.dividerTextRegister),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  cardIcon('assets/images/logos/google.svg',context),
-                  cardIcon('assets/images/logos/facebook.svg',context),
-                  cardIcon('assets/images/logos/gmail.svg',context)
+                  cardIcon('assets/images/logos/google.svg', context),
+                  cardIcon('assets/images/logos/facebook.svg', context),
+                  cardIcon('assets/images/logos/gmail.svg', context)
                 ],
               ),
               SizedBox(
                 height: height * 0.04,
               ),
-              Padding(
-                padding: EdgeInsets.only(bottom: height * 0.03),
-                child: Center(
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'Already have an account? ',
-                      style: AppTextStyle.footerTextAuthenticationStyle,
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Login Now',
-                          style: TextStyle(
-                            color: AppColors.textButtonLoginColor,
-                            // Color for "Login Now"
-                            fontWeight: FontWeight.bold,
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          LoginScreen()));
-                            },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              )
+              AuthFooter(
+                  nameRoute: NameRoute.loginScreen,
+                  beginText: AuthConstants.footerBeginTextRegister,
+                  endText: AuthConstants.footerEndTextRegister)
             ],
           ),
         ]),

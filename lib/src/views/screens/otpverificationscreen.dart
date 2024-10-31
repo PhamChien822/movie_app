@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/src/constants/auth_costants.dart';
 import 'package:movie_app/src/router/nameroute.dart';
+import 'package:movie_app/src/views/widgets/footers/auth_footer.dart';
+import 'package:movie_app/src/views/widgets/headers/auth_header.dart';
 import 'package:movie_app/src/views/widgets/otp_input_feild.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_app/theme/appcolors.dart';
 import 'package:movie_app/theme/apptextstyles.dart';
@@ -20,8 +22,8 @@ class OTPVerificationScreen extends StatefulWidget {
 class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final height = size.height;
+     final size = MediaQuery.of(context).size;
+     final height = size.height;
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     bool isDarkMode = themeProvider.isDarkMode;
     Color borderColor =
@@ -31,39 +33,29 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     Color backgroundColor = isDarkMode
         ? AppColors.darkBackgroundOTPField
         : AppColors.backgroundInputFieldColor;
-    Color backgroundActiveColor = isDarkMode ? AppColors.darkBackgroundOTPField : Colors.white;
+    Color backgroundActiveColor =
+        isDarkMode ? AppColors.darkBackgroundOTPField : Colors.white;
     return Scaffold(
       body: SafeArea(
         child: Stack(children: [
           ListView(
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12),
             children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: AppButtonBackArrow(
-                  onPressed: () {
-                    context.go(NameRoute.loginScreen);
-                  },
-                ),
+              AuthHeader(
+                  nameRoute: NameRoute.loginScreen,
+                  headerText: AuthConstants.headerTextOTPVerification,
+                  detailText: AuthConstants.headerTextDetailOTPVerification),
+              OtpInputFeild(
+                backgroundColor: backgroundColor,
+                backgroundActiveColor: backgroundActiveColor,
+                borderActiveColor: borderActiveColor,
+                borderColor: borderColor,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 28),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text('OTP Verification',
-                      style: AppTextStyle.bigNameScreen),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 28),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                      "Enter the verification code we just sent on your email address.",
-                      style: AppTextStyle.detailScreen),
-                ),
-              ),
-              OtpInputFeild(backgroundColor: backgroundColor,backgroundActiveColor: backgroundActiveColor,borderActiveColor: borderActiveColor,borderColor: borderColor,)
+              SizedBox(height: height * 0.5),
+              AuthFooter(
+                  nameRoute: NameRoute.oTPVerificationScreen,
+                  beginText: AuthConstants.footerBeginTextOTPVerification,
+                  endText: AuthConstants.footerEndTextOTPVerification)
             ],
           ),
         ]),

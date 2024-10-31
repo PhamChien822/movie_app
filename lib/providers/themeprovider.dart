@@ -1,35 +1,88 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/theme/appthemes.dart';
+import 'package:provider/provider.dart';
 
-import '../theme/appcolors.dart';
-import '../theme/apptextstyles.dart';
+import 'package:flutter/material.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeData _themeData ;
-  bool _isDarkMode = false;
+  // Khởi tạo chế độ theme và theme hiện tại dựa trên theme hệ thống
+  bool _isDarkMode;
+  ThemeMode _themeMode;
+  ThemeData _currentTheme;
 
-  ThemeProvider(this._themeData);
-
-  ThemeData get themeData => _themeData;
+  ThemeProvider()
+      : _isDarkMode =
+            WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+                Brightness.dark,
+        _themeMode =
+            WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+                    Brightness.dark
+                ? ThemeMode.dark
+                : ThemeMode.light,
+        _currentTheme =
+            WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+                    Brightness.dark
+                ? AppThemes.darkTheme
+                : AppThemes.lightTheme;
 
   bool get isDarkMode => _isDarkMode;
 
-  ThemeData get currentTheme => _isDarkMode ? AppThemes.darkTheme:AppThemes.lightTheme;
+  ThemeData get currentTheme => _currentTheme;
 
-      static TextStyle? changeTheme(BuildContext context) {
-    // print(Theme.of(context).textTheme.bodyLarge);
-    return Theme.of(context).textTheme.bodyLarge;
+  ThemeMode get themeMode => _themeMode;
+
+  void updateThemeFromSystem(Brightness brightness) {
+    final isDark = brightness == Brightness.dark;
+    if (_isDarkMode != isDark) {
+      _isDarkMode = isDark;
+      _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
+      _currentTheme = isDark ? AppThemes.darkTheme : AppThemes.lightTheme;
+      notifyListeners();
+    }
+  }
+}
+
+class ThemeChangeListener extends StatefulWidget {
+  final Widget child;
+
+  const ThemeChangeListener({super.key, required this.child});
+
+  @override
+  State<ThemeChangeListener> createState() => ThemeChangeListenerState();
+}
+
+class ThemeChangeListenerState extends State<ThemeChangeListener>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this); // Đăng ký observer
   }
 
-  static Color changeBorderColorCardIcon(BuildContext context) {
-    return Colors.red;
+  @override
+  void dispose() {
+    WidgetsBinding.instance
+        .removeObserver(this); // Hủy observer khi không cần thiết
+    super.dispose();
   }
 
-  void toggleTheme() {
-    _isDarkMode = !_isDarkMode;
-    _themeData = _isDarkMode ? AppThemes.darkTheme : AppThemes.lightTheme;
+  @override
+  void didChangePlatformBrightness() {
+    super.didChangePlatformBrightness();
 
-    notifyListeners();
+    // Cập nhật theme hệ thống khi thay đổi
+    final brightness =
+        WidgetsBinding.instance.platformDispatcher.platformBrightness;
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    themeProvider.updateThemeFromSystem(brightness);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    print(
+        "ứng dụng của bạn đang ở chế độ ${themeProvider.themeMode == ThemeMode.dark ? "Dark mode" : "light mode"}");
+    return widget
+        .child; // Trả về widget con, như MaterialApp hoặc widget gốc của bạn
   }
 }

@@ -97,47 +97,29 @@ class TextFieldItemState extends State<TextFieldItem> {
 
   void _validateInput(String value) {
     setState(() {
-      if (!widget.isEmail &&
-          !widget.isPasswordField &&
-          !widget.isConfirmPassword) {
-        errorText = validateName(widget.controller.text);
-        widget.onValidate?.call(errorText == null);
-        return;
-      }
-     else if (widget.isEmail &&
-          !widget.isPasswordField &&
-          !widget.isConfirmPassword) {
+      if (widget.isEmail) {
         errorText = validateEmail(widget.controller.text);
-        widget.onValidate?.call(errorText == null);
-        return;
-      }
-    else  if (!widget.isEmail &&
-          widget.isPasswordField &&
-          !widget.isConfirmPassword) {
+      } else if (widget.isPasswordField) {
         errorText = validatePassword(widget.controller.text);
-        widget.onValidate?.call(errorText == null);
-        return;
-      }
-     else if (!widget.isEmail &&
-          !widget.isPasswordField &&
-          widget.isConfirmPassword) {
-        errorText  = validateConfirmPassword(
+      } else if (widget.isConfirmPassword) {
+        errorText = validateConfirmPassword(
           widget.passwordController?.text,
           widget.controller.text,
         );
-
-        widget.onValidate?.call(errorText == null);
-        return;
+      } else {
+        errorText = validateName(widget.controller.text);
       }
+
       // Notify validation status
       widget.onValidate?.call(errorText == null);
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    InputDecorationTheme inputDecorationTheme = themeProvider.themeData.inputDecorationTheme;
+    InputDecorationTheme inputDecorationTheme = themeProvider.currentTheme.inputDecorationTheme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: TextField(
@@ -146,6 +128,7 @@ class TextFieldItemState extends State<TextFieldItem> {
         obscureText: widget.isPasswordField || widget.isConfirmPassword,
         keyboardType: TextInputType.emailAddress,
         style: themeProvider.currentTheme.textTheme.bodyMedium,
+        cursorColor: themeProvider.currentTheme.colorScheme.onPrimary,
         decoration: InputDecoration(
           hintText: widget.hintText,
           filled: true,

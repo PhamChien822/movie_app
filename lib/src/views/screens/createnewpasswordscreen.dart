@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movie_app/src/constants/auth_costants.dart';
 import 'package:movie_app/src/router/nameroute.dart';
+import 'package:movie_app/src/views/widgets/headers/auth_header.dart';
 import 'package:movie_app/theme/appcolors.dart';
 import 'package:movie_app/theme/apptextstyles.dart';
 
@@ -41,31 +43,10 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
           ListView(
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12),
             children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: AppButtonBackArrow(
-                  onPressed: () {
-                    context.go(NameRoute.loginScreen);
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 28),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text('Create new Password',
-                      style: AppTextStyle.bigNameScreen),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 28),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                      "Your new password must be unique from those previously used",
-                      style: AppTextStyle.detailScreen),
-                ),
-              ),
+              AuthHeader(
+                  nameRoute: NameRoute.loginScreen,
+                  headerText: AuthConstants.headerTextCreatePassword,
+                  detailText: AuthConstants.headerDetailTextCreatePassword),
               TextFieldItem(
                 hintText: "New Password",
                 controller: _passwordController,

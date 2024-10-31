@@ -18,17 +18,17 @@ class AppButtonLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvier = Provider.of<ThemeProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return SizedBox(
       width: double.infinity, // Đặt chiều rộng đầy đủ
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          disabledBackgroundColor: themeProvier.currentTheme.disabledColor,
-          backgroundColor: themeProvier.currentTheme.primaryColorDark,
+          disabledBackgroundColor: themeProvider.currentTheme.disabledColor,
+          backgroundColor: themeProvider.currentTheme.primaryColorDark,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8), // Đặt bán kính bo tròn
           ),
-          padding: EdgeInsets.symmetric(vertical: 15), // Đặt padding cho button
+          padding: EdgeInsets.symmetric(vertical: 17,), // Đặt padding cho button
           elevation: 0, // Đặt độ cao của button là 0 để không có viền bóng
         ),
         onPressed: onPressed,
@@ -48,17 +48,20 @@ class AppButtonBackArrow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvier = Provider.of<ThemeProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
   return  Container(
       height: SizeButton.backArrowSize,
       width: SizeButton.backArrowSize,
       decoration: BoxDecoration(
-          color: themeProvier.currentTheme.colorScheme.primary,
-          border: Border.all(color: themeProvier.currentTheme.colorScheme.primaryContainer),
+          color: themeProvider.currentTheme.colorScheme.primary,
+          border: Border.all(color: themeProvider.currentTheme.colorScheme.primaryContainer,width: 2),
           borderRadius: BorderRadius.circular(15)),
       child: IconButton(
         icon:
-        SvgPicture.asset("assets/images/icons/back-arrow.svg",color: themeProvier.currentTheme.colorScheme.onPrimary,),
+        SvgPicture.asset("assets/images/icons/back-arrow.svg",colorFilter: ColorFilter.mode(
+          themeProvider.currentTheme.colorScheme.onPrimary,
+          BlendMode.srcIn,
+        ),),
         onPressed: onPressed
       ),
     );

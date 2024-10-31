@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movie_app/providers/themeprovider.dart';
 import 'package:movie_app/src/router/nameroute.dart';
-import 'package:movie_app/src/views/screens/loginscreen.dart';
 import 'package:movie_app/src/views/widgets/appbutton.dart';
-import 'package:movie_app/theme/apptextstyles.dart';
-
-
+import 'package:provider/provider.dart';
 
 class SuccessPasswordChangeScreen extends StatelessWidget {
-  const SuccessPasswordChangeScreen({super.key});
+  final String headerText;
+  final String detailText;
+
+  const SuccessPasswordChangeScreen(
+      {super.key, required this.headerText, required this.detailText});
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: themeProvider.currentTheme.scaffoldBackgroundColor,
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(30),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,27 +37,31 @@ class SuccessPasswordChangeScreen extends StatelessWidget {
                   size: 60,
                 ),
               ),
-              SizedBox(height: 30),
+              Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      // "Password Changed!" Text
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Text('Password Changed!',
+                            style:
+                                themeProvider.currentTheme.textTheme.bodyLarge),
+                      ),
 
-              // "Password Changed!" Text
-              Text(
-                'Password Changed!',
-                style: AppTextStyle.baseTextStyle.copyWith(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10,bottom: 40),
+                        child: Text(
+                          'Your password has been changed successfully.',
+                          style: themeProvider
+                              .currentTheme.textTheme.headlineSmall,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
 
-              SizedBox(height: 10),
 
-              // "Your password has been changed successfully." Text
-              Text(
-                'Your password has been changed successfully.',
-                style: AppTextStyle.detailScreen,
-                textAlign: TextAlign.center,
-              ),
-
-              SizedBox(height: 40),
+                    ],
+                  )),
 
               // "Back to Login" button
               AppButtonLogin(

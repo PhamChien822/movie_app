@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:movie_app/src/constants/auth_costants.dart';
 import 'package:movie_app/src/views/screens/createnewpasswordscreen.dart';
 import 'package:movie_app/src/views/screens/forgotpasswordscreen.dart';
 import 'package:movie_app/src/views/screens/homescreen.dart';
@@ -17,7 +18,7 @@ class NameRoute {
   static final String oTPVerificationScreen = '/otp-verification';
 
   static final GoRouter router = GoRouter(
-    initialLocation: NameRoute.oTPVerificationScreen,
+    initialLocation: NameRoute.successPasswordChangeScreen,
     routes: [
       GoRoute(
         path: homeScreen,
@@ -41,7 +42,7 @@ class NameRoute {
       ),
       GoRoute(
         path: NameRoute.successPasswordChangeScreen,
-        builder: (context, state) => SuccessPasswordChangeScreen(),
+        builder: (context, state) => SuccessPasswordChangeScreen(headerText: AuthConstants.headerTextSuccessPasswordChange, detailText: AuthConstants.detailTextSuccessPasswordChange,),
       ),
       GoRoute(
         path: NameRoute.createPasswordScreen,
