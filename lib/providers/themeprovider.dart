@@ -66,6 +66,9 @@ class ThemeChangeListenerState extends State<ThemeChangeListener>
     super.dispose();
   }
 
+
+  // Hàm khởi tạo màu nền và viền
+
   @override
   void didChangePlatformBrightness() {
     super.didChangePlatformBrightness();
@@ -79,10 +82,6 @@ class ThemeChangeListenerState extends State<ThemeChangeListener>
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-    print(
-        "ứng dụng của bạn đang ở chế độ ${themeProvider.themeMode == ThemeMode.dark ? "Dark mode" : "light mode"}");
-    return widget
-        .child; // Trả về widget con, như MaterialApp hoặc widget gốc của bạn
+    return widget.child;
   }
 }

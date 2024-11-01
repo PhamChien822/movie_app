@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:movie_app/src/constants/auth_costants.dart';
+import 'package:movie_app/src/constants/auth_constants.dart';
 import 'package:movie_app/src/router/nameroute.dart';
 import 'package:movie_app/src/views/widgets/headers/auth_header.dart';
 import 'package:movie_app/theme/appcolors.dart';

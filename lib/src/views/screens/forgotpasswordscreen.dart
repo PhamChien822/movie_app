@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:movie_app/src/constants/auth_costants.dart';
+import 'package:movie_app/src/constants/auth_constants.dart';
 import 'package:movie_app/src/router/nameroute.dart';
 import 'package:movie_app/src/views/widgets/footers/auth_footer.dart';
 import 'package:movie_app/src/views/widgets/headers/auth_header.dart';
@@ -64,7 +64,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             ? () => sendCodeVerify(context)
                             : null)),
               ),
-              SizedBox(height: height * 0.47),
+              SizedBox(height: height * 0.52),
               AuthFooter(
                   nameRoute: NameRoute.loginScreen,
                   beginText: AuthConstants.footerBeginTextForgotPassword,

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
-import 'package:movie_app/src/constants/auth_costants.dart';
+import 'package:movie_app/src/constants/auth_constants.dart';
 
 import '../../../../theme/appcolors.dart';
 import '../../../../theme/apptextstyles.dart';

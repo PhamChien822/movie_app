@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:movie_app/providers/themeprovider.dart';
-import 'package:movie_app/src/constants/auth_costants.dart';
+import 'package:movie_app/src/constants/auth_constants.dart';
 import 'package:movie_app/src/router/nameroute.dart';
 import 'package:movie_app/src/views/widgets/cardicons.dart';
 import 'package:movie_app/src/views/widgets/dividers/auth_dividers.dart';
@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                   ],
                 ),
                 SizedBox(
-                  height: height * 0.14,
+                  height: height * 0.25,
                 ),
                 AuthFooter(
                   nameRoute: NameRoute.registerScreen,

@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:movie_app/src/constants/auth_costants.dart';
+import 'package:movie_app/src/constants/auth_constants.dart';
 import 'package:movie_app/src/router/nameroute.dart';
 import 'package:movie_app/src/views/screens/homescreen.dart';
 import 'package:movie_app/src/views/screens/loginscreen.dart';
@@ -123,7 +123,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ],
               ),
               SizedBox(
-                height: height * 0.04,
+                height: height * 0.08,
               ),
               AuthFooter(
                   nameRoute: NameRoute.loginScreen,

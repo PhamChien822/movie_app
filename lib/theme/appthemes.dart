@@ -49,11 +49,15 @@ class AppThemes {
       colorScheme: ColorScheme.light(
           primary: Colors.white,
           onPrimary: Colors.black,
-          primaryContainer: AppColors.borderColor),
+          primaryContainer: AppColors.borderColor,
+          secondaryContainer: AppColors.borderColor,
+          onSecondaryContainer: AppColors.borderActive,
+      secondary: Colors.white),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
           backgroundColor: AppColors.buttonColor,
+
         ),
       ),
       cardTheme: CardTheme(
@@ -70,6 +74,7 @@ class AppThemes {
       disabledColor: AppColors.darkDisableButtonColor,
       primaryColorDark: AppColors.darkButtonColor,
       scaffoldBackgroundColor: Colors.black,
+
       textTheme: TextTheme(
           bodyLarge: AppTextStyle.bigNameScreen.copyWith(color: Colors.white),
           bodyMedium:
@@ -109,7 +114,11 @@ class AppThemes {
       colorScheme: ColorScheme.dark(
           primary: AppColors.buttonColor,
           onPrimary: Colors.white,
-          primaryContainer: AppColors.buttonColor),
+          primaryContainer: AppColors.buttonColor,
+        secondaryContainer: AppColors.darkBorderOTPField,
+        onSecondaryContainer: AppColors.darkBorderActive,
+        secondary: AppColors.darkBackgroundOTPField,
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
